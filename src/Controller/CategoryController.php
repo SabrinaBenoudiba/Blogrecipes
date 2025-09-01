@@ -6,10 +6,11 @@ use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #region Index All Categories
 #[Route('/category')]
@@ -25,7 +26,8 @@ final class CategoryController extends AbstractController
 #endregion Index All Categories
 
     #region New
-    #[Route('/new', name: 'app_category_new', methods: ['GET', 'POST'])]
+    #[Route('/admin/new', name: 'app_category_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]    
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $category = new Category();
@@ -48,16 +50,21 @@ final class CategoryController extends AbstractController
 
     #region Show
     #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]
+    // #[IsGranted('ROLE_ADMIN')]  
+    // #[IsGranted('ROLE_USER')]  
     public function show(Category $category): Response
     {
+        $recipes=$category->getRecipes();
         return $this->render('category/show.html.twig', [
             'category' => $category,
+            'recipes' => $recipes,
         ]);
     }
     #endregion Show
 
     #region Edit
-    #[Route('/{id}/edit', name: 'app_category_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/{id}/edit', name: 'app_category_edit', methods: ['GET', 'POST'])]
+     #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
@@ -77,7 +84,8 @@ final class CategoryController extends AbstractController
     #endregion Edit
 
     #region Delete
-    #[Route('/{id}', name: 'app_category_delete', methods: ['POST'])]
+    #[Route('/admin/{id}', name: 'app_category_delete', methods: ['POST'])]
+     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->getPayload()->getString('_token'))) {
