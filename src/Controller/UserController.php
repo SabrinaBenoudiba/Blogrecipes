@@ -6,11 +6,13 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+#region all User
 #[Route('/user')]
 final class UserController extends AbstractController
 {
@@ -21,15 +23,20 @@ final class UserController extends AbstractController
             'users' => $userRepository->findAll(),
         ]);
     }
+#endregion all User
 
+    #region New
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('plainPassword')->getData();
+            $hashPassword = $passwordHasher->hashPassword($user,$plainPassword);
+            $user->setPassword($hashPassword);
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -41,7 +48,9 @@ final class UserController extends AbstractController
             'form' => $form,
         ]);
     }
+    #endregion New
 
+    #region Show
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
@@ -49,14 +58,18 @@ final class UserController extends AbstractController
             'user' => $user,
         ]);
     }
+    #endregion Show
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('plainPassword')->getData();
+            $hashPassword = $passwordHasher->hashPassword($user,$plainPassword);
+            $user->setPassword($hashPassword);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);

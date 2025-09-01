@@ -16,16 +16,18 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('content')
-            ->add('createdAt', null, [
-                'widget' => 'single_text',
-            ])
+            // ->add('createdAt', null, [
+            //     'widget' => 'single_text',
+            // ])
             ->add('recipe', EntityType::class, [
                 'class' => Recipe::class,
-                'choice_label' => 'id',
+                'choice_label' => 'title',
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => function(User $user) {
+                return $user->getName() . ' ' . $user->getLastname();
+                },
             ])
         ;
     }

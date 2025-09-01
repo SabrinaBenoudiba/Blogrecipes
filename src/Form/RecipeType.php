@@ -20,12 +20,15 @@ class RecipeType extends AbstractType
             ->add('preparationTime')
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => function(User $user) {
+                    return $user->getName() . ' ' . $user->getLastname();
+                },
             ])
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'id',
                 'multiple' => true,
+                'required' => false,
             ])
         ;
     }
