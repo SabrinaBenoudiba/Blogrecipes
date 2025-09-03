@@ -49,8 +49,10 @@ final class RecipeController extends AbstractController
     // #[IsGranted('ROLE_USER')]  
     public function show(Recipe $recipe): Response
     {
+        $comments = $recipe->getComments();
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
+            'comments' => $comments
         ]);
     }
 

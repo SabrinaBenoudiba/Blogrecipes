@@ -1,10 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomePageController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-
-<h1>Hello !!! </h1>
-
+    <div class="container">
+        <div class="row">
+            <h2 class="title text-center p-2">Bienvenue sur notre blog de recettes sucrées salées</h2>
+            {% for category in categories %} {#dans la boucle for le products qu'on récupère est dans note homepagecontroller#}
+            <div class="card text-bg-dark col-2 m-4 p-0">
+                {# <img src="{{ category.name }}" alt=""> #}
+                <div class="card-body border-light mb-3 " >
+                    <a class ="titleProductLink" href="#"><h5 class="card-title">{{category.name}}</h5></a>
+                    <p class="card-text"</p>
+                    <a class= "m-2 btn btn-outline-primary"href="#"></a>
+                {# {% if app.user %}
+                    {% if not app.user.favorites.contains(product) %}
+                        <a class="m-2 btn btn-outline-primary" href="{{ path('app_product_favorites', {'id': product.id}) }}">Ajouter aux favoris</a>
+                    {% else %}
+                        <a class="m-2 btn btn-outline-danger" href="{{ path('app_product_favorites', {'id': product.id}) }}">Supprimer des favoris</a>
+                    {% endif %}
+                {% endif %} #}
+                    {# <p class="card-text">{{recipe.description|slice(0,100)}}...</p> #}
+                </div>
+            </div>
+            {% endfor %}   
+        </div>
+        {# {{ knp_pagination_render(products, 'layouts/_pagination_template.html.twig') }} #}
+    </div>
 
 {% endblock %}

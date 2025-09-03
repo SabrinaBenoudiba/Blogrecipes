@@ -24,6 +24,7 @@ class RecipeType extends AbstractType
                     return $user->getName() . ' ' . $user->getLastname();
                 },
             ])
+            ->add('image')
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',

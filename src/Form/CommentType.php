@@ -19,16 +19,16 @@ class CommentType extends AbstractType
             // ->add('createdAt', null, [
             //     'widget' => 'single_text',
             // ])
-            ->add('recipe', EntityType::class, [
-                'class' => Recipe::class,
-                'choice_label' => 'title',
-            ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => function(User $user) {
-                return $user->getName() . ' ' . $user->getLastname();
-                },
-            ])
+            // ->add('recipe', EntityType::class, [
+            //     'class' => Recipe::class,
+            //     'choice_label' => 'title',
+            // ])
+            // ->add('user', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => function(User $user) {
+            //     return $user->getName() . ' ' . $user->getLastname();
+            //     },
+            // ])
         ;
     }
 

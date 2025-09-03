@@ -3,15 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Recipe;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use DateTimeImmutable;
+use Doctrine\DBAL\Types\DateTimeImmutableType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+// #[Route('/comment')]
 #[Route('/comment')]
 final class CommentController extends AbstractController
 {
@@ -23,11 +26,16 @@ final class CommentController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_comment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/recipe/{id}/new', name: 'app_comment_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, Recipe $recipe): Response
     {
         $comment = new Comment();
         $comment -> setCreatedAt(new DateTimeImmutable()); //initialisation variable afin la valeur par défaut saoit la date d'aujourd'hui
+        $form = $this->createForm(CommentType::class, $comment);
+        $comment->setRecipe($recipe);
+
+        $comment->setUser($this->getUser());
+
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -35,7 +43,9 @@ final class CommentController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_recipe_show', [
+                'id' => $recipe->getId()
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('comment/new.html.twig', [

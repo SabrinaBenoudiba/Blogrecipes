@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recipe index{% endblock %}
+{% block title %}Les recettes{% endblock %}
 
 {% block body %}
-    <h1>Recipe index</h1>
+    <h1>Liste des recettes</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Image</th>
+                {# <th>Image</th> #}
                 <th>Title</th>
                 <th>Description</th>
                 <th>PreparationTime</th>
@@ -18,13 +19,15 @@
         <tbody>
         {% for recipe in recipes %}
             <tr>
-                <td>{{ recipe.id }}</td>
+                <td><img class="picture" src="{{ recipe.image }}" alt=""></td>
+                {# <td>{{ recipe.image }}</td> #}
                 <td>{{ recipe.title }}</td>
                 <td>{{ recipe.description }}</td>
                 <td>{{ recipe.preparationTime }}</td>
                 <td>
                     <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">show</a>
                     <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
+                    <a href="{{ path('app_comment_new', {'id': recipe.id}) }}">Ajouter un commentaire</a>
                 </td>
             </tr>
         {% else %}

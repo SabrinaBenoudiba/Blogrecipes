@@ -18,6 +18,7 @@
      <table class="table">
         <thead>
             <tr>
+                <th>Image</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>PreparationTime</th>
@@ -27,6 +28,7 @@
         <tbody>
         {% for recipe in recipes %}
             <tr>
+                <td><img class="picture" src="{{ recipe.image }}" alt=""></td>
                 <td>{{ recipe.title }}</td>
                 <td>{{ recipe.description }}</td>
                 <td>{{ recipe.preparationTime }}</td>
