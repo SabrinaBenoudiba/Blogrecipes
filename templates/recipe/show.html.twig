@@ -3,25 +3,31 @@
 {% block title %}Recette{% endblock %}
 
 {% block body %}
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card" style="width: 22rem;">
+        <img src="{{ recipe.image }}" class="card-img-top uniform-image" alt="{{ recipe.title }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ recipe.title }}</h5>
+            <p class="card-text">{{ recipe.description }}</p>
 
-<div class="card" style="width: 18rem;">
-    <img src="{{ recipe.image }}" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">{{recipe.title}}</h5>
-        <p class="card-text">{{recipe.description}}</p>
-            <div>
+            <h6>Commentaires</h6>
+            <div class="mb-3">
                 {% for comment in comments %}
-                    <div>{{comment.user.name}} a dit : </div>
-                    <div>{{comment.content}}</div>
+                    <div class="border rounded p-2 mb-2">
+                        <strong>{{ comment.user.name }}</strong> a dit :<br>
+                        <span>{{ comment.content }}</span>
+                    </div>
+                {% else %}
+                    <p class="text-muted">Aucun commentaire pour cette recette.</p>
                 {% endfor %}
-                </div >
-        <a href="{{ path('app_comment_new', {'id': recipe.id})}}" class="btn btn-primary">Ajouter un commentaire</a>
-    
-        <a href="{{ path('app_recipe_index') }}" class="btn btn-primary">back to list</a>
+            </div>
 
-        <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}" class="btn btn-primary">edit</a>
+            <a href="{{ path('app_comment_new', {'id': recipe.id})}}" class="btn btn-primary me-2 mb-2">Ajouter un commentaire</a>
+            <a href="{{ path('app_recipe_index') }}" class="btn btn-secondary me-2 mb-2">Retour à la liste</a>
+            <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}" class="btn btn-warning mb-2">Modifier</a>
+        </div>
     </div>
-</div>
 
     {{ include('recipe/_delete_form.html.twig') }}
+</div>
 {% endblock %}

@@ -46,7 +46,7 @@ class RecipeRepository extends ServiceEntityRepository
          /**
         * @return Recipe[] Returns an array of Recipe objects
         */
-       public function findBySearch(string $text): array
+       public function findBySearch(string $text): array #Fonction pour une recherche
        {
            return $this->createQueryBuilder('r')
                ->andWhere('r.title LIKE :val')

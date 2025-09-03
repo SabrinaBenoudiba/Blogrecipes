@@ -1,51 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category{% endblock %}
+{% block title %}Catégorie{% endblock %}
 
 {% block body %}
-    <h1>Category</h1>
+    <div class="container mt-5">
+        <h1 class="mb-4">Catégorie : Les {{ category.name }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Name</th>
-                <td>Les {{ category.name }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table table-bordered mb-5 w-auto">
+            <tbody>
+                <tr>
+                    <th scope="row" style="width: 25%;">Nom</th>
+                    <td>Les {{ category.name }}</td>
+                </tr>
+            </tbody>
+        </table>
 
+        <h2 class="mb-3">Recettes associées</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Temps de préparation</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for recipe in recipes %}
+                    <tr>
+                        <td>
+                            <img src="{{ recipe.image }}" alt="Image de {{ recipe.title }}" class="img-thumbnail" style="max-width: 100px; height: auto;">
+                        </td>
+                        <td>{{ recipe.title }}</td>
+                        <td>{{ recipe.description }}</td>
+                        <td>{{ recipe.preparationTime }}</td>
+                        <td>
+                            <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}" class="btn btn-sm btn-outline-primary mb-1">Voir</a>
+                            <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}" class="btn btn-sm btn-outline-warning mb-1">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">Aucune recette trouvée</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-     <table class="table">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>PreparationTime</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for recipe in recipes %}
-            <tr>
-                <td><img class="picture" src="{{ recipe.image }}" alt=""></td>
-                <td>{{ recipe.title }}</td>
-                <td>{{ recipe.description }}</td>
-                <td>{{ recipe.preparationTime }}</td>
-                <td>
-                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">show</a>
-                    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <a href="{{ path('app_category_index') }}" class="btn btn-secondary mt-4">Retour à la liste</a>
 
-    <a href="{{ path('app_category_index') }}">back to list</a>
-
-    {{ include('category/_delete_form.html.twig') }}
+        {{ include('category/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
+

@@ -1,31 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Accueil - Mon Blog Sucré-Salé{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <h2 class="title text-center p-2">Bienvenue sur notre blog de recettes sucrées salées</h2>
-            {% for category in categories %} {#dans la boucle for le products qu'on récupère est dans note homepagecontroller#}
-            <div class="card text-bg-dark col-2 m-4 p-0">
+
+    <div class="container mt-5">
+        <div class="bg-light p-5 rounded shadow-sm">
+            <h1 class="mb-4 text-center">✨ Bienvenue sur mon univers gourmand ! ✨</h1>
+            <p class="fs-5">
+                Ici, je partage ma passion pour la cuisine sucrée-salée, ce délicieux équilibre entre douceur et caractère.<br>
+                À travers mes recettes, je souhaite montrer qu’il est possible de surprendre les papilles en mariant des saveurs inattendues, simples à réaliser mais toujours originales.
+            </p>
+            <p class="fs-5">
+                Que vous soyez curieux·se de découvrir de nouvelles associations, en quête d’idées pour impressionner vos invités ou tout simplement gourmand·e, vous êtes au bon endroit.
+            </p>
+            <p class="fs-5">
+                Chaque recette est pensée pour être accessible, créative et surtout savoureuse, afin de vous donner envie d’expérimenter et de vous régaler.
+            </p>
+            <p class="fs-5">
+                Alors, installez-vous, laissez-vous tenter par mes inspirations et embarquez avec moi dans cette aventure culinaire où le sucré et le salé s'entremêlent avec gourmandise.
+            </p>
+            <p class="fs-5 text-center fw-semibold">🍴 Bonne découverte et surtout… bon appétit !</p>
+        </div>
+    </div>
+
+            {# {% for category in categories %} dans la boucle for le products qu'on récupère est dans note homepagecontroller #}
+            {# <div class="card text-bg-dark col-2 m-4 p-0"> #}
                 {# <img src="{{ category.name }}" alt=""> #}
-                <div class="card-body border-light mb-3 " >
+                {# <div class="card-body border-light mb-3 " >
                     <a class ="titleProductLink" href="#"><h5 class="card-title">{{category.name}}</h5></a>
                     <p class="card-text"</p>
                     <a class= "m-2 btn btn-outline-primary"href="#"></a>
-                {# {% if app.user %}
+                {% if app.user %}
                     {% if not app.user.favorites.contains(product) %}
                         <a class="m-2 btn btn-outline-primary" href="{{ path('app_product_favorites', {'id': product.id}) }}">Ajouter aux favoris</a>
                     {% else %}
                         <a class="m-2 btn btn-outline-danger" href="{{ path('app_product_favorites', {'id': product.id}) }}">Supprimer des favoris</a>
                     {% endif %}
                 {% endif %} #}
-                    {# <p class="card-text">{{recipe.description|slice(0,100)}}...</p> #}
+                    {# <p class="card-text">{{recipe.description|slice(0,100)}}...</p>
                 </div>
             </div>
             {% endfor %}   
-        </div>
+
         {# {{ knp_pagination_render(products, 'layouts/_pagination_template.html.twig') }} #}
-    </div>
 
 {% endblock %}

@@ -2,7 +2,8 @@ body {
     /* background-color: skyblue; */
 }
 
-.picture{
-    width: 250px;
-    height: 250px;
+.uniform-image {
+    width: 100%;      /* largeur pleine de la carte */
+    height: 200px;    /* hauteur fixe identique pour toutes */
+    object-fit: cover; /* recadrage automatique en conservant les proportions */
 }
