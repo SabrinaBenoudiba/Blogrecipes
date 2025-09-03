@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LookupController!{% endblock %}
+
+{% block body %}
+<div>
+    <form>
+        <input type="search" name="search" placeholder="Recherche...">
+        <button type="submit">Rechercher</button>
+    </form>
+
+</div>
+<table>
+    {% for recipe in recipes %}
+        <tr>
+            <td><img class="picture" src="{{ recipe.image }}" alt=""></td>
+            <td>{{ recipe.title }}</td>
+            <td>{{ recipe.description }}</td>
+            <td>{{ recipe.preparationTime }}</td>
+            <td>
+                <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">show</a>
+                <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
+            </td>
+        </tr>
+    {% else %}
+</table>
+    
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+{% endblock %}
