@@ -14,12 +14,15 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
+            ->add('name', null, [
+                'label' => 'Nom de la catégorie', 
+            ])
             ->add('recipes', EntityType::class, [
                 'class' => Recipe::class,
                 'choice_label' => 'title',
                 'multiple' => true,
                 'required' => false,
+                'label' => 'Recettes', 
             ])
         ;
     }
@@ -31,3 +34,4 @@ class CategoryType extends AbstractType
         ]);
     }
 }
+

@@ -15,21 +15,26 @@ class RecipeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('preparationTime')
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => function(User $user) {
-                    return $user->getName() . ' ' . $user->getLastname();
-                },
+            ->add('title', null, [
+                'label' => 'Nom de la recette',
             ])
+            ->add('description')
+            ->add('preparationTime', null, [
+                'label' => 'Temps de préparation',
+            ])
+            // ->add('user', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => function(User $user) {
+            //         return $user->getName() . ' ' . $user->getLastname();
+            //     },
+            // ])
             ->add('image')
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'multiple' => true,
                 'required' => false,
+                'label' => 'Catégorie',
             ])
         ;
     }

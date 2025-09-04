@@ -84,10 +84,12 @@ final class CategoryController extends AbstractController
     #endregion Edit
 
     #region Delete
-    #[Route('/admin/{id}', name: 'app_category_delete', methods: ['POST'])]
-     #[IsGranted('ROLE_ADMIN')]
-    public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
+    #[Route('/admin/{id}', name: 'app_category_delete', methods: ['GET','POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function delete($id, Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
+        $category = $entityManager->getRepository(Category::class)->find($id); //attention à faire le repository sur l'entité que l'on veut
+
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($category);
             $entityManager->flush();

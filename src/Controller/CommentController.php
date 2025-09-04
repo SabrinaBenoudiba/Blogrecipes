@@ -30,7 +30,7 @@ final class CommentController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, Recipe $recipe): Response
     {
         $comment = new Comment();
-        $comment -> setCreatedAt(new DateTimeImmutable()); //initialisation variable afin la valeur par défaut saoit la date d'aujourd'hui
+        $comment -> setCreatedAt(new DateTimeImmutable()); //initialisation variable afin la valeur par défaut soit la date d'aujourd'hui
         $form = $this->createForm(CommentType::class, $comment);
         $comment->setRecipe($recipe);
 
