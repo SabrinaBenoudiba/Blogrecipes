@@ -43,6 +43,8 @@ final class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+             $this->addFlash('success', "L'utilisateur a bien été ajouté");
+
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -55,6 +57,7 @@ final class UserController extends AbstractController
 
     #region Show
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function show(User $user): Response
     {
         //  $user = $userRepository->find($id);
@@ -85,6 +88,8 @@ final class UserController extends AbstractController
             $user->setPassword($hashPassword);
             $entityManager->flush();
 
+             $this->addFlash('info', "Les modifications ont bien été appliquées");
+
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -95,16 +100,21 @@ final class UserController extends AbstractController
     }
     #endregion Edit
 
-
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            // Si l'utilisateur supprime son propre compte
+            if ($user === $this->getUser()) {
+                $this->container->get('session')->invalidate();
+            }
             $entityManager->remove($user);
             $entityManager->flush();
-        }
 
+            $this->addFlash('danger', "L'utilisateur a bien été supprimé");
+        }
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

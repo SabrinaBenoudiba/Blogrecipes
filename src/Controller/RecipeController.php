@@ -35,6 +35,8 @@ final class RecipeController extends AbstractController
             $entityManager->persist($recipe);
             $entityManager->flush();
 
+            $this->addFlash('success', "La recette a bien été ajoutée");
+
             return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -66,6 +68,8 @@ final class RecipeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('info', "La recette a bien été modifiée");
+
             return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -82,6 +86,8 @@ final class RecipeController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$recipe->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($recipe);
             $entityManager->flush();
+
+             $this->addFlash('danger', "La recette a bien été supprimée");
         }
 
         return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);
