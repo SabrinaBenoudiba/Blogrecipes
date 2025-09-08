@@ -3,9 +3,11 @@
 {% block title %}Nouvelle recette{% endblock %}
 
 {% block body %}
-    <h1>Créer une nouvelle recette</h1>
+    <h1 style="text-align:center">Créer une nouvelle recette</h1>
 
     {{ include('recipe/_form.html.twig') }}
 
-    <a href="{{ path('app_recipe_index') }}">Retour à la liste</a>
+    <div class="text-center mt-3">
+        <a href="{{ path('app_recipe_index') }}">Retour à la liste</a>
+    </div>
 {% endblock %}

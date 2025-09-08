@@ -4,13 +4,13 @@
 
 {% block body %}
     <div class="container mt-5">
-        <h1 class="mb-4">Liste des recettes</h1>
+        <h1 class="mb-4" style ="text-align: center">Liste des recettes</h1>
 
         <table class="table table-striped table-hover align-middle">
             <thead class="table-dark">
                 <tr>
                     <th scope="col">Image</th>
-                    <th scope="col">Titre</th>
+                    <th scope="col">Nom de la recette</th>
                     <th scope="col">Description</th>
                     <th scope="col">Temps de préparation</th>
                     <th scope="col">Actions</th>
@@ -23,11 +23,13 @@
                         <img src="{{ recipe.image }}" alt="Image de {{ recipe.title }}" class="img-thumbnail" style="max-width: 100px; height: auto;">
                     </td>
                     <td>{{ recipe.title }}</td>
-                    <td>{{ recipe.description }}</td>
+                    <td>{{ recipe.description|slice(0,100) }} ...</td>
                     <td>{{ recipe.preparationTime }}</td>
                     <td>
                         <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}" class="btn btn-sm btn-outline-primary mb-1">Voir</a>
-                        <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}" class="btn btn-sm btn-outline-warning mb-1">Modifier</a>
+                        {% if is_granted ('ROLE_ADMIN') %}
+                            <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}" class="btn btn-sm btn-outline-warning mb-1">Modifier</a>
+                        {% endif %}
                         <a href="{{ path('app_comment_new', {'id': recipe.id}) }}" class="btn btn-sm btn-outline-success mb-1">Ajouter un commentaire</a>
                         {{ include('recipe/_delete_form.html.twig') }} 
                     </td> 
@@ -39,7 +41,8 @@
             {% endfor %}
             </tbody>
         </table>
-
-        <a href="{{ path('app_recipe_new') }}" class="btn btn-primary mt-3">Créer une nouvelle recette</a>
+        {% if is_granted ('ROLE_ADMIN') %}
+            <a href="{{ path('app_recipe_new') }}" class="btn btn-primary mt-3">Créer une nouvelle recette</a>
+        {% endif %}
     </div>
 {% endblock %}

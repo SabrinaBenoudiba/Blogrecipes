@@ -38,7 +38,9 @@
                         <td>{{ recipe.preparationTime }}</td>
                         <td>
                             <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}" class="btn btn-sm btn-outline-primary mb-1">Voir</a>
-                            <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}" class="btn btn-sm btn-outline-warning mb-1">Modifier</a>
+                            {% if is_granted ('ROLE_ADMIN') %}
+                                <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}" class="btn btn-sm btn-outline-warning mb-1">Modifier</a>
+                            {% endif %}
                             {{ include('recipe/_delete_form.html.twig') }}     
                         </td>
                     </tr>

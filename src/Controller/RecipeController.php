@@ -80,7 +80,7 @@ final class RecipeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_recipe_delete', methods: ['POST'])]
-     #[IsGranted('ROLE_ADMIN')]    
+    #[IsGranted('ROLE_ADMIN')]    
     public function delete(Request $request, Recipe $recipe, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$recipe->getId(), $request->getPayload()->getString('_token'))) {

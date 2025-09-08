@@ -1,5 +1,8 @@
 body {
-    /* background-color: skyblue; */
+   background: #e8e8e8;
+    background: linear-gradient(90deg, rgba(232, 232, 232, 1) 0%, rgba(191, 198, 201, 1) 23%, rgba(137, 140, 140, 1) 64%, rgba(232, 232, 232, 1) 100%);
+    /* background-color: rgba(171, 170, 170, 0.844);
+    background-image: url(/public/uploads/images/picture1.jpg) */
 }
 
 .uniform-image {
@@ -7,3 +10,4 @@ body {
     height: 200px;    /* hauteur fixe identique pour toutes */
     object-fit: cover; /* recadrage automatique en conservant les proportions */
 }
+

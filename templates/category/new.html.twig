@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Nouvelle catégorie{% endblock %}
-
+{% if is_granted ('ROLE_ADMIN') %}
 {% block body %}
     <h1>Créer une nouvelle catégorie</h1>
 
@@ -9,3 +9,4 @@
 
     <a href="{{ path('app_category_index') }}">Retour à la liste</a>
 {% endblock %}
+{% endif %}

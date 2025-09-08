@@ -8,7 +8,32 @@
         <img src="{{ recipe.image }}" class="card-img-top uniform-image" alt="{{ recipe.title }}">
         <div class="card-body">
             <h5 class="card-title">{{ recipe.title }}</h5>
-            <p class="card-text">{{ recipe.description }}</p>
+            <div>
+                <p id="descExcerpt" style="max-height: 4.5em; overflow: hidden;">
+                    {{ recipe.description }}
+                </p>
+                <div id="fullDescription" class="collapse">
+                    <p>{{ recipe.description }}</p>
+                </div>
+                <button id="toggleDescBtn" class="btn btn-link p-0" type="button" data-bs-toggle="collapse" data-bs-target="#fullDescription" aria-expanded="false" aria-controls="fullDescription">
+                    Lire la suite
+                </button>
+            </div>
+            <script>
+                var toggleBtn = document.getElementById('toggleDescBtn'); // On récupère le bouton qui va basculer l'affichage (lire la suite / réduire)
+                var excerpt = document.getElementById('descExcerpt'); // On récupère le paragraphe qui affiche l'extrait de la description
+                var fullDesc = document.getElementById('fullDescription'); // On récupère la div contenant la description complète cachée
+
+                fullDesc.addEventListener('show.bs.collapse', function () { // Quand la description complète commence à s'afficher...
+                    excerpt.style.display = 'none'; // On masque l'extrait pour ne pas le voir en double
+                    toggleBtn.textContent = 'Réduire'; // On change le texte du bouton pour indiquer qu'on peut réduire
+                });
+                
+                fullDesc.addEventListener('hide.bs.collapse', function () { // Quand la description complète se cache/replie...
+                    excerpt.style.display = 'block'; // On réaffiche l'extrait de la description
+                    toggleBtn.textContent = 'Lire la suite'; // On remet le texte du bouton à "Lire la suite"
+                });
+            </script>
 
             <h6>Commentaires</h6>
             <div class="mb-3">
@@ -24,7 +49,9 @@
 
             <a href="{{ path('app_comment_new', {'id': recipe.id})}}" class="btn btn-primary me-2 mb-2">Ajouter un commentaire</a>
             <a href="{{ path('app_recipe_index') }}" class="btn btn-secondary me-2 mb-2">Retour à la liste</a>
-            <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}" class="btn btn-warning mb-2">Modifier</a>
+            {% if is_granted ('ROLE_ADMIN') %}
+                <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}" class="btn btn-warning mb-2">Modifier</a>
+            {% endif %}
             {{ include('recipe/_delete_form.html.twig') }} 
         </div>
 
