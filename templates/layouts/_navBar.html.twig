@@ -15,7 +15,7 @@
           <a class="nav-link" href="{{ path('app_register')}}">Inscription</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ path('app_login')}}">Identification</a>
+          <a class="nav-link" href="{{ path('app_login')}}">Identification/Déconnexion</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ path('app_recipe_index') }}">Les Recettes</a>
@@ -38,11 +38,11 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ path('app_contact') }}">Nous contacter</a>
         </li>
-        {% if app.user %}
+        {# {% if app.user %}
           <li class="nav-item">
             <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
           </li>
-        {% endif %}
+        {% endif %} #}
       </ul>
       <form class="d-flex" role="search" action="{{ path('app_lookup')}}" method="GET">
         <input class="form-control me-sm-2" name="search" type="search" placeholder="Search">

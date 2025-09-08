@@ -21,28 +21,8 @@
                 Alors, installez-vous, laissez-vous tenter par mes inspirations et embarquez avec moi dans cette aventure culinaire où le sucré et le salé s'entremêlent avec gourmandise.
             </p>
             <p class="fs-5 text-center fw-semibold">🍴 Bonne découverte et surtout… bon appétit !</p>
+            <a href="{{ path('app_recipe_index') }}" class="btn btn-sm btn-outline-primary mb-1">Venez découvrir nos recettes</a>
         </div>
     </div>
-
-            {# {% for category in categories %} dans la boucle for le products qu'on récupère est dans note homepagecontroller #}
-            {# <div class="card text-bg-dark col-2 m-4 p-0"> #}
-                {# <img src="{{ category.name }}" alt=""> #}
-                {# <div class="card-body border-light mb-3 " >
-                    <a class ="titleProductLink" href="#"><h5 class="card-title">{{category.name}}</h5></a>
-                    <p class="card-text"</p>
-                    <a class= "m-2 btn btn-outline-primary"href="#"></a>
-                {% if app.user %}
-                    {% if not app.user.favorites.contains(product) %}
-                        <a class="m-2 btn btn-outline-primary" href="{{ path('app_product_favorites', {'id': product.id}) }}">Ajouter aux favoris</a>
-                    {% else %}
-                        <a class="m-2 btn btn-outline-danger" href="{{ path('app_product_favorites', {'id': product.id}) }}">Supprimer des favoris</a>
-                    {% endif %}
-                {% endif %} #}
-                    {# <p class="card-text">{{recipe.description|slice(0,100)}}...</p>
-                </div>
-            </div>
-            {% endfor %}   
-
-        {# {{ knp_pagination_render(products, 'layouts/_pagination_template.html.twig') }} #}
 
 {% endblock %}
